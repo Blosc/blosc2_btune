@@ -16,6 +16,7 @@ fi
 
 # Checkout C-Blosc2 sources
 BLOSC2_VERSION="main"
+rm -rf c-blosc2
 if [ ! -d "c-blosc2" ]
 then
   git clone --depth=1 -b $BLOSC2_VERSION https://github.com/Blosc/c-blosc2.git c-blosc2
@@ -35,6 +36,7 @@ cd -
 
 # Checkout Python-Blosc2 sources, just for testing the Btune wheel
 # We will use the regular python-blosc2 wheel in combination with BTUNE_BALANCE
+rm -rf python-blosc2
 PYTHON_BLOSC2_VERSION="main"
 if [ ! -d "python-blosc2" ]
 then

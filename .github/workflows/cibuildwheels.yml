@@ -21,8 +21,8 @@ jobs:
     strategy:
       matrix:
         # os: [[ubuntu-latest, macos-latest]]
-        os: [macos-latest]
-        arch: [aarch64]
+        os: [[macos-latest]]
+        arch: [aarch64, x86_64]
         # arch: [x86_64]
         # exclude:
           # - os: macos-latest
@@ -80,7 +80,7 @@ jobs:
           CIBW_TEST_COMMAND: BTUNE_MODELS_DIR={project}/models_sample BTUNE_BALANCE=.1 BLOSC_TRACE=1 BTUNE_TRACE=1 python -m pytest -s {project}/python-blosc2/tests
           CIBW_BUILD_VERBOSITY: 1
           # ARM64 is not supported yet (probably we need to use aarch64 on src/CMakeLists.txt)
-          CIBW_ARCHS_MACOS: "arm64"
+          CIBW_ARCHS_MACOS: "arm64 x86_64"
           # CIBW_ARCHS_MACOS: "x86_64"
 
       - name: Upload wheels
@@ -89,18 +89,18 @@ jobs:
           path: ./wheelhouse/*.whl
 
 
-  upload_pypi:
-    needs: [ build_wheels ]  # last but not least
-    runs-on: ubuntu-latest
-    # Only upload wheels when tagging (typically a release)
-    if: startsWith(github.event.ref, 'refs/tags')
-    steps:
-      - uses: actions/download-artifact@v3
-        with:
-          name: artifact
-          path: dist
-
-      - uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          user: __token__
-          password: ${{ secrets.blosc_pypi_secret }}
+#  upload_pypi:
+#    needs: [ build_wheels ]  # last but not least
+#    runs-on: ubuntu-latest
+#    # Only upload wheels when tagging (typically a release)
+#    if: startsWith(github.event.ref, 'refs/tags')
+#    steps:
+#      - uses: actions/download-artifact@v3
+#        with:
+#          name: artifact
+#          path: dist
+#
+#      - uses: pypa/gh-action-pypi-publish@release/v1
+#        with:
+#          user: __token__
+#          password: ${{ secrets.blosc_pypi_secret }}

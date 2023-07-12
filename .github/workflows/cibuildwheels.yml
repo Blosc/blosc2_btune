@@ -20,10 +20,9 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        # os: [[ubuntu-latest, macos-latest]]
-        os: [[macos-latest]]
-        arch: [aarch64, x86_64]
-        # arch: [x86_64]
+        os: [[ubuntu-latest, macos-latest]]
+        # arch: [aarch64, x86_64]
+        arch: [x86_64]
         # exclude:
           # - os: macos-latest
             # arch: aarch64

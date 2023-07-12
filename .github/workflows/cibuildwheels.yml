@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - main
+      - arm
     tags:
       - '*'
   pull_request:
@@ -19,12 +20,13 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest]
-        # arch: [x86_64, aarch64]
-        arch: [x86_64]
-        exclude:
-          - os: macos-latest
-            arch: aarch64
+        # os: [[ubuntu-latest, macos-latest]]
+        os: [macos-latest]
+        arch: [aarch64]
+        # arch: [x86_64]
+        # exclude:
+          # - os: macos-latest
+            # arch: aarch64
 
     steps:
       - name: Checkout repo
@@ -78,8 +80,8 @@ jobs:
           CIBW_TEST_COMMAND: BTUNE_MODELS_DIR={project}/models_sample BTUNE_BALANCE=.1 BLOSC_TRACE=1 BTUNE_TRACE=1 python -m pytest -s {project}/python-blosc2/tests
           CIBW_BUILD_VERBOSITY: 1
           # ARM64 is not supported yet (probably we need to use aarch64 on src/CMakeLists.txt)
-          # CIBW_ARCHS_MACOS: "x86_64 arm64"
-          CIBW_ARCHS_MACOS: "x86_64"
+          CIBW_ARCHS_MACOS: "arm64"
+          # CIBW_ARCHS_MACOS: "x86_64"
 
       - name: Upload wheels
         uses: actions/upload-artifact@v3
